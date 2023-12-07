@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nông trại thông minh</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js"></script>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+          input[type="range"] {
+              width: 100%;
+          }
+          #brightnessValue {
+            position: relative;
+            margin-left: 6.5%;
+            margin-top: -27%;
+            font-size: 0xp; /* Điều chỉnh kích thước font */
+            font-family: tahoma;
+          }
+          #temperatureValue {
+            position: relative;
+            margin-left: 6.5%;
+            margin-top: -27%;
+            font-size: 0xp; /* Điều chỉnh kích thước font */
+            font-family: tahoma;
+          }
+      </style>
+      
+      <title>Brightness Control</title>
+
+</head>
+<body>
+    <div id= "header">
+        <ul>
+             <li><b>Nông trại thông minh</b></li>
+             
+        </ul>
+    </div>
+
+
+    
+    <div id= "main"> 
+        <div id="top">
+          <div id="time"> </div>
+           <script>
+          function dongho() {
+          var time = new Date();
+          var gio = time.getHours();
+          var phut = time.getMinutes();
+          var giay = time.getSeconds();
+          if (gio < 10) 
+          gio = "0" + gio;
+          if (phut < 10) 
+          phut = "0" + phut;
+          if (giay < 10) 
+          giay = "0" + giay;
+          document.getElementById("time").innerHTML = gio + ":" + phut + ":" + giay;
+          setTimeout("dongho()", 1000);
+          };
+          dongho();
+          
+          </script>
+          <div id="nd"> 
+            <h1><img src="image\nhietdo1.png" id="nd1"></h1>
+            <h2>Nhiệt độ</h2>
+          </div>
+          <div id="da"> 
+            <h3><img src="image\da2.png" id="da1"></h3>
+            <h4>Độ ẩm</h4>
+          </div>
+          <div id="kk"> 
+            <h5><img src="image\kk4.png" id="kk1"></h5>
+            <h6>Chất lượng không khí</h6>
+          </div>
+          <div class="thongso">
+            <h7 id="nhietdo"></h7>
+            <h7 id="doam"></h7>
+            <h7 id="khongkhi"></h7>
+          </div>
+        </div>
+        <div id="bot">
+          <h1><center><img src="image\lamp_off.png"id="den"></center>
+            <button type="button" id="btn1" >On</button>
+            <button type="button" id="btn2" >Off</button><br><br>
+        </h1>
+        <h1><center><img src="image\air_condition_off.png"id="dieuhoa"></center>
+            <button type="button" id="btn3" >On</button>
+            <button type="button" id="btn4" >Off</button><br><br>
+        </h1>
+        <h1><center><img src="image\cam_off.png"id="giamsat"></center>
+            <button type="button" id="btn5" >On</button>
+            <button type="button" id="btn6" >Off</button><br><br>
+        </h1>
+        </div>
+        <div id= "chart">
+          <iframe width="400" height="210" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2176099/charts/1?width=auto&height=auto&dynamic=true&results=60&type=line&update=15"></iframe>
+          <iframe width="400" height="210" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2176099/charts/2?width=auto&height=auto&dynamic=true&results=60&type=line&update=15"></iframe>
+          <iframe width="400" height="210" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2176099/charts/3?width=auto&height=auto&dynamic=true&results=60&type=line&update=15"></iframe>
+        </div>
+
+        <div id= "text1">Đèn</div>
+        <div id= "text2">Điều hòa</div>
+        <div id= "text3">Giám sát</div>
+
+        <div id= "ds">
+          <input type="range" id="brightnessControl" min="0" max="100" value="50" step="1" onchange="changeBrightness1()">
+          
+          <p id="brightnessValue">Độ sáng: 50%</p>
+      
+          <script>
+              function changeBrightness1() {
+                  var brightnessValue = document.getElementById("brightnessControl").value;
+                  document.getElementById("brightnessValue").innerHTML = "Độ sáng: " + brightnessValue + "%";
+              }
+          </script>
+        </div>
+
+        <div id= "dnd">
+          <input type="range" id="temperatureControl" min="0" max="50" value="25" step="1" onchange="changeBrightness2()">
+          
+          <p id="temperatureValue">Nhiệt độ: 25°C</p>
+      
+          <script>
+              function changeBrightness2() {
+                  var temperatureValue = document.getElementById("temperatureControl").value;
+                  document.getElementById("temperatureValue").innerHTML = "Nhiệt độ: " + temperatureValue + "°C";
+              }
+          </script>
+        </div>
+
+    </div>
+
+    <div id= "footer">
+      <ul>
+           <li>   Trường đại học Sư phạm kỹ thuật TP.HCM <br>
+            Khoa Điện - điện tử <br>
+            Nguyễn Văn Trường - 20161389 <br>
+             Bùi Văn Hiếu - 20161315 </li> 
+     </ul>
+ </div>
+    <script src="function.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+  apiKey: "AIzaSyD7HSRveryEMs-Pzt4XgvyG2sQYXvuDItc",
+  authDomain: "lab3-86899.firebaseapp.com",
+  databaseURL: "https://lab3-86899-default-rtdb.firebaseio.com",
+  projectId: "lab3-86899",
+  storageBucket: "lab3-86899.appspot.com",
+  messagingSenderId: "1010279139965",
+  appId: "1:1010279139965:web:1b52d73e0942ddfe0abf14",
+  measurementId: "G-25QNBS7HSN"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+<script>
+  //functions
+  var nhietDo = document.getElementById('nhietdo');
+  var dbRef = firebase.database().ref().child('Nhiet do');
+  var doAm = document.getElementById('doam');
+  var dbRef2 = firebase.database().ref().child('Do am');
+  var khongKhi = document.getElementById('khongkhi');
+  var dbRef3 = firebase.database().ref().child('Khong khi');  
+  dbRef.on('value', snap => nhietDo.innerText = snap.val());
+  dbRef2.on('value', snap => doAm.innerText = snap.val());
+  dbRef3.on('value', snap => khongKhi.innerText = snap.val());
+</script>
+</body>
+</html>
